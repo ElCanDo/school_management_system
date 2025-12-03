@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
         ('teacher', 'Teacher'),
         ('admin', 'Admin'),
     ]
-    role = models.CharField(max_length=100)
+    role = models.CharField(max_length=100, choices=ROLE_CHOICES)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

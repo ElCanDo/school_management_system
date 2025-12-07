@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from accounts.serializers import CustomUserSerializer
+from accounts.serializers import CustomUserSerializer 
 from .models import Student
 
+# Serializer for the Student model
 class StudentSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer()  # Nested serializer for the related CustomUser model
 
@@ -18,5 +19,6 @@ class StudentSerializer(serializers.ModelSerializer):
             'gender',
             'enrollment_date',
             'grade',
-        ]    
+        ]   # Fields to be included in the serialization
+         
         read_only_fields = ['enrollment_date']  # enrollment_date is read-only

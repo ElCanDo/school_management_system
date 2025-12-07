@@ -38,12 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework.authtoken',
-    'accounts.apps.AccountsConfig',
-    'students.apps.StudentsConfig',
-    'teachers.apps.TeachersConfig',
-    'classrooms.apps.ClassroomsConfig',
-    'enrollments.apps.EnrollmentsConfig',
-    'grades.apps.GradesConfig',
+    'accounts.apps.AccountsConfig', # Custom user model app
+    'students.apps.StudentsConfig', # Students management app
+    'teachers.apps.TeachersConfig', # Teachers management app
+    'classrooms.apps.ClassroomsConfig', # Classrooms management app
+    'enrollments.apps.EnrollmentsConfig', # Enrollments management app
+    'grades.apps.GradesConfig', # Grades management app
 
 ]
 
@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'school_management_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.mysql', # Using MySQL as the database engine
         'NAME': 'school_management_db',
         'USER': 'Prince',
         'PASSWORD': 'Watson36@chi',
@@ -133,4 +133,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser' # Specifying custom user model

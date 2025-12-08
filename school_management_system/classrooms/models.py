@@ -15,10 +15,10 @@ class Classroom(models.Model):
     def __str__(self):
         return f"{self.name} - {self.grade.name}"    
 
-# # Subject model linked to Classroom
-# class Subject(models.Model):
-#     name = models.CharField(max_length=100)
-#     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name='subjects')
+# Subject model linked to Classroom
+class Subject(models.Model):
+    name = models.CharField(max_length=100)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name='subjects')
     
-#     def __str__(self):
-#         return f"{self.name} - {self.classroom.name}"    
+    def __str__(self):
+        return f"{self.name} - {self.classroom.name}"    

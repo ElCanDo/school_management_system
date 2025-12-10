@@ -1,11 +1,5 @@
 from rest_framework import serializers
-from .models import Grade, Classroom, Subject
-
-
-class GradeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Grade
-        fields = '__all__'
+from .models import Classroom, Subject
 
 
 class ClassroomSerializer(serializers.ModelSerializer):

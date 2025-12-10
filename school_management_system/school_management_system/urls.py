@@ -16,20 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from students.views import StudentViewSet
-from classrooms.views import ClassroomViewSet, GradeViewSet, SubjectViewSet
-from teachers.views import TeacherViewSet
-
-# Create a router and register our viewsets with it.
-router = DefaultRouter()
-router.register(r'students', StudentViewSet)
-router.register(r'classrooms', ClassroomViewSet)
-router.register(r'grade', GradeViewSet)
-router.register(r'subjects', SubjectViewSet)
-router.register(r'teachers', TeacherViewSet)  # Registering TeacherViewSet
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    path('', admin.site.urls),
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    path('api/', include("classrooms.urls")),
+    path('api/', include("students.urls")),
+
 ]

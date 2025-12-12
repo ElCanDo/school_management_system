@@ -4,10 +4,10 @@ from .models import Student
 
 # Serializer for the Student model
 class StudentSerializer(serializers.ModelSerializer):
-    user = CustomUserSerializer()  # Nested serializer for the related CustomUser model
+    user = CustomUserSerializer(read_only=True) 
 
     class Meta:
         model = Student
-        fields = '__all__'   # All Fields to be included in the serialization
+        fields = '__all__'   
 
-        read_only_fields = ['enrollment_date']  # enrollment_date is read-only
+        read_only_fields = ['enrollment_date']  

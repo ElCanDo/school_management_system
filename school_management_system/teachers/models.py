@@ -8,21 +8,21 @@ class Teacher(models.Model):
         ('M', 'Male'),
         ('F', 'Female'),
         ('O', 'Other'),
-    ]# Choices for gender field
+    ]
 
     user = models.OneToOneField(
         'accounts.CustomUser',
         on_delete=models.CASCADE,
         related_name='teacher_profile'
-    )#Link Teacher to CustomUser model
-
+    )
+    full_name = models.CharField(max_length=200, null=False, blank=False, default='Unknown teacher')
     teacher_contact = models.CharField(max_length=15, 
                                       unique=True, 
-                                      validators=[RegexValidator(r'^\+?\d{9,15}$')]) # Validates phone number format
+                                      validators=[RegexValidator(r'^\+?\d{9,15}$')]) 
     
-    date_hired = models.DateField(auto_now_add=True)# Date when the teacher was hired
-    subject_specialization = models.CharField(max_length=100)# Subject specialization of the teacher
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)# Gender of the teacher
+    date_hired = models.DateField(auto_now_add=True)
+    subject_specialization = models.CharField(max_length=100)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
     def __str__(self):
         return f"{self.username} ({self.role})"

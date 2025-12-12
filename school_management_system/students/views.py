@@ -6,7 +6,16 @@ from .serializers import StudentSerializer
 
 #Student ViewSet for CRUD operations
 class StudentViewSet(viewsets.ModelViewSet):
-    authentication_classes = [TokenAuthentication] # Use TokenAuthentication for authentication
-    permission_classes = [IsAuthenticated] # Require users to be authenticated
-    queryset = Student.objects.all() # Get all Student objects
-    serializer_class = StudentSerializer # Use StudentSerializer for serialization
+    """"""
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    queryset = Student.objects.select_related('user', 'grade').all() 
+    serializer_class = StudentSerializer
+
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == "Student":
+            return Student.objects.filter(user=user)
+        return super().get_queryset()

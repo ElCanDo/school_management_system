@@ -3,13 +3,13 @@ from django.db import models
 
 # Custom User model for the system
 class CustomUser(AbstractUser):
-    # Role Choices for users who would use the system
+   
     ROLE_CHOICES = [
         ('student', 'Student'),
         ('teacher', 'Teacher'),
         ('admin', 'Admin'),
     ]
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-
+    email = models.EmailField(unique=True, blank=False, null=False)
     def __str__(self):
         return f"{self.username} ({self.role})"

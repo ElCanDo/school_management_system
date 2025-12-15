@@ -8,12 +8,12 @@ from .views import (CustomUserViewSet,
                     TeacherAssignViewSet)
 
 router = DefaultRouter() 
-router.register(r'users', CustomUserViewSet)
-router.register('classrooms', ClassroomViewSet)
-router.register('teachers', TeacherViewSet)
-router.register('students', StudentViewSet)
-router.register('enrollments', EnrollmentViewSet)
-router.register('teacher_assignment', TeacherAssignViewSet)
+router.register(r'users', CustomUserViewSet, basename='user')
+router.register(r'classrooms', ClassroomViewSet, basename='classroom')
+router.register(r'teachers', TeacherViewSet, bassname='teacher')
+router.register(r'students', StudentViewSet, basename='student')
+router.register(r'enrollments', EnrollmentViewSet, basename='enrollment')
+router.register(r'teacher-assignments', TeacherAssignViewSet, basename='teacher-assignment')
 
 urlpatterns = [
     path('', include(router.urls)),

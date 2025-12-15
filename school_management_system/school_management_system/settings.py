@@ -37,13 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework', # Django REST framework for building APIs
-    'rest_framework.authtoken', # Token authentication for REST framework
-    'accounts.apps.AccountsConfig', # Custom user model app
-    'students.apps.StudentsConfig', # Students management app
-    'teachers.apps.TeachersConfig', # Teachers management app
-    'classrooms.apps.ClassroomsConfig', # Classrooms management app
-    'enrollments.apps.EnrollmentsConfig', # Enrollments management app
+    'rest_framework', 
+    'rest_framework.authtoken', 
+    'accounts.apps.AccountsConfig',
+    'students.apps.StudentsConfig',
+    'teachers.apps.TeachersConfig', 
+    'classrooms.apps.ClassroomsConfig', 
+    'enrollments.apps.EnrollmentsConfig',
+    'school_api' 
 
 ]
 

@@ -1,0 +1,114 @@
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.core.validators import RegexValidator
+
+GENDER_CHOICES =[
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+    ]
+
+ROLE_CHOICES = [
+        ('student', 'Student'),
+        ('teacher', 'Teacher'),
+        ('admin', 'Admin'),
+    ]
+
+class CustomUser(AbstractUser):
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
+    email = models.EmailField(unique=True, blank=False, null=False)
+    def __str__(self):
+        return f"{self.username} ({self.role})"
+
+
+    
+""" Classroom model """
+
+class Classroom(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    
+    class Meta:
+        unique_together = ('name')
+
+    def __str__(self):
+        return self.name 
+ 
+    
+
+"""Teacher Model Definition"""
+
+class Teacher(models.Model):
+   
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='teacher_profile'
+    )
+    full_name = models.CharField(max_length=200, null=False, blank=False, default="Unknown teacher")
+    teacher_contact = models.CharField(max_length=15, 
+                                      unique=True, 
+                                      validators=[RegexValidator(r'^\+?\d{9,15}$')]) 
+    subject_specialization = models.CharField(max_length=100)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default="Student")
+    date_hired = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.full_name} ({self.role})"
+      
+
+"""Student Model"""
+
+class Student(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='student_profile'
+    )
+    
+    full_name = models.CharField(max_length=200, null=False, blank=False, default="Unknown Student")
+
+    date_of_birth = models.DateField()
+
+    mother_full_name = models.CharField(max_length=200)
+    
+    mother_contact = models.CharField(max_length=15, 
+                                      unique=True, 
+                                      validators=[RegexValidator(r'^\+?\d{9,15}$')]) 
+    
+    father_full_name = models.CharField(max_length=200)
+
+    father_contact = models.CharField(max_length=15, 
+                                      unique=True, 
+                                      validators=[RegexValidator(r'^\+?\d{9,15}$')] 
+        )
+    home_address = models.TextField(blank=True, null=True)
+
+    medical_allergies = models.TextField(blank=True, null=True)
+
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+
+    enrollment_date = models.DateField(auto_now_add=True)
+
+    classroom = models.ForeignKey(Classroom, on_delete=models.SET_NULL, null=True, related_name='Students')
+
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
+
+    def __str__(self):
+        return f"{self.full_name} - Student"
+    
+
+class Enrollment(models.Model):
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='students_enrolled')
+    classroom = models.OneToOneField(Classroom, on_delete=models.CASCADE, related_name='classroom_enrollments')
+    date_enrolled = models.DateTimeField(auto_now_add=True)
+    
+
+    def __str__(self):
+        return f"{self.student.full_name} - {self.classroom.name}"    
+
+
+class TeacherStudentAssignment(models.Model):
+    teacher = models.OneToOneField(Classroom, on_delete=models.SET_NULL, related_name="teacher")
+
+    classroom = models.ForeignKey(Classroom, on_delete=models.SET_NULL,)

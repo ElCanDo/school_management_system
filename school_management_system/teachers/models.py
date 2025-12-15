@@ -20,9 +20,9 @@ class Teacher(models.Model):
                                       unique=True, 
                                       validators=[RegexValidator(r'^\+?\d{9,15}$')]) 
     
-    date_hired = models.DateField(auto_now_add=True)
     subject_specialization = models.CharField(max_length=100)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    date_hired = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.username} ({self.role})"
+        return f"{self.full_name} ({self.role})"

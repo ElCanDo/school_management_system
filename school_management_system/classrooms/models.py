@@ -1,11 +1,12 @@
 from django.db import models
-
+from teachers.models import Teacher
 
 """ Classroom model """
 
 class Classroom(models.Model):
     name = models.CharField(max_length=50)
     grade = models.IntegerField()
+    teacher = models.OneToOneField(Teacher, on_delete=models.SET_NULL, related_name="classroom")
 
     class Meta:
         unique_together = ('name', 'grade')
@@ -14,7 +15,7 @@ class Classroom(models.Model):
         return f"{self.name} - Grade {self.grade}"    
 
 
-"""Subject model linked to Classroom"""
+"""Subject for a Classroom"""
 
 class Subject(models.Model):
     name = models.CharField(max_length=100)

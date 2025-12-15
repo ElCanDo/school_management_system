@@ -18,7 +18,7 @@ class CustomUser(AbstractUser):
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
     
     def __str__(self):
-        return f"{self.username} ({self.role})"
+        return f"{self.username} - ({self.role})"
 
 
     
@@ -53,7 +53,7 @@ class Teacher(models.Model):
     date_hired = models.DateField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.full_name} ({user.role})"
+        return f"{self.full_name} {self.role})"
       
 
 """Student Model"""

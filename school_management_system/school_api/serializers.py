@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser, Classroom, Teacher, Student, Enrollment, TeacherAssignment
+from .models import CustomUser, Classroom, Teacher, Student, Enrollment, TeacherAssign
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Mate:
@@ -44,6 +44,6 @@ class TeacherAssignSerializer(serializers.ModelSerializer):
     teacher_name = serializers.CharField(source="teacher.full_name", read_only=True)
     class_name = serializers.CharField(source="classroom.name", read_only=True)
     class Meta:
-        model = TeacherAssignment
+        model = TeacherAssign
         fields =['id', 'teacher_full_name', 'classroom_name']
         read_only_field= ['id']

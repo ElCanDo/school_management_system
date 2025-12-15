@@ -10,7 +10,7 @@ from .views import (CustomUserViewSet,
 router = DefaultRouter() 
 router.register(r'users', CustomUserViewSet, basename='user')
 router.register(r'classrooms', ClassroomViewSet, basename='classroom')
-router.register(r'teachers', TeacherViewSet, bassname='teacher')
+router.register(r'teachers', TeacherViewSet, basename='teacher')
 router.register(r'students', StudentViewSet, basename='student')
 router.register(r'enrollments', EnrollmentViewSet, basename='enrollment')
 router.register(r'teacher-assignments', TeacherAssignViewSet, basename='teacher-assignment')

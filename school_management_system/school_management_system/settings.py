@@ -39,11 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework', 
     'rest_framework.authtoken', 
-    'accounts.apps.AccountsConfig',
-    'students.apps.StudentsConfig',
-    'teachers.apps.TeachersConfig', 
-    'classrooms.apps.ClassroomsConfig', 
-    'enrollments.apps.EnrollmentsConfig',
     'school_api' 
 
 ]
@@ -134,4 +129,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'accounts.CustomUser' # Specifying custom user model
+AUTH_USER_MODEL = 'school_api.CustomUser' 

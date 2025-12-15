@@ -26,9 +26,6 @@ class CustomUser(AbstractUser):
 
 class Classroom(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    
-    class Meta:
-        unique_together = ('name')
 
     def __str__(self):
         return self.name 
@@ -89,7 +86,7 @@ class Student(models.Model):
 
     enrollment_date = models.DateField(auto_now_add=True)
 
-    classroom = models.ForeignKey(Classroom, on_delete=models.SET_NULL, null=True, related_name='Students')
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, related_name='Students')
 
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
 
@@ -106,9 +103,9 @@ class Enrollment(models.Model):
         return f"{self.student.full_name} is enrolled into: {self.classroom.name}"
 
 class TeacherAssign(models.Model):
-    teacher = models.OneToOneField(Teacher, on_delete=models.SET_NULL, related_name="teacher")
+    teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE, related_name="teacher")
 
-    classroom = models.ForeignKey(Classroom, on_delete=models.SET_NULL,)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE,)
 
     def __str__(self):
         return f"{self.teacher.full_name} is assigned to : {self.classroom.name}"

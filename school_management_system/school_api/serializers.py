@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import CustomUser, Classroom, Teacher, Student, Enrollment, TeacherAssign
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    class Mate:
+    class Meta:
         model = CustomUser
         fields = ['id', 
                   'username', 'first_name', 
@@ -37,7 +37,7 @@ class EnrollmentSerializer(serializers.ModelSerializer):
     class_name = serializers.CharField(source="classroom.name", read_only=True)
     class Meta:
         model = Enrollment
-        fields =['id', 'student_full_name', 'classroom_name', 'date_enrolled' ]
+        fields =['id', 'student_name', 'classroom_name', 'date_enrolled' ]
         read_only_field = ['id']
 
 class TeacherAssignSerializer(serializers.ModelSerializer):

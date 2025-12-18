@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import (CustomUserViewSet, 
+from .views import (CustomUserRegistrationView, CustomUserViewSet, 
                     ClassroomViewSet, 
                     TeacherViewSet, 
                     StudentViewSet, 
@@ -17,7 +17,7 @@ router.register(r'teacher-assignments', TeacherAssignViewSet, basename='teacher-
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # path('', home, name='home'),
+    # path('api-auth/', include('rest_framework.urls')),
+    path('register/', CustomUserRegistrationView.as_view(), name='registration'),
 
 ]

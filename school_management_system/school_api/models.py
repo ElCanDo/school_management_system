@@ -8,6 +8,8 @@ GENDER_CHOICES =[
         ('O', 'Other'),
     ]
 
+"""The CustomUser Model Represents a User defined in the System, that every user inherits from"""
+
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
         ('student', 'Student'),
@@ -15,16 +17,28 @@ class CustomUser(AbstractUser):
         ('admin', 'Admin'),
     ]
 
+
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
-       
-    # USERNAME_FIELD = "username"
-    # REQUIRED_FIELDS = []
+    
+    def save(self, *args, **kwargs):
+        if self.pk:
+            original_user = CustomUser.objects.get(pk=self.pk)
+            if original_user.role != self.role:
+                raise ValueError("user role cannot be changed")
+
+        if self.role == 'admin':
+            self.is_staff = True
+            self.is_superuser = True  
+        else:
+            self.is_staff = False
+            self.is_superuser = False
+        super().save(*args, **kwargs)    
 
     def __str__(self):
         return self.username
 
     
-""" Classroom model """
+""" The Classroom Model represents classrooms in the school with their names e.g : Grade 1 """
 
 class Classroom(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -33,7 +47,7 @@ class Classroom(models.Model):
         return self.name 
  
     
-"""Teacher Model Definition"""
+"""The Teacher Model Collects data of every Teacher employed in the School"""
 
 class Teacher(models.Model):
    
@@ -42,7 +56,7 @@ class Teacher(models.Model):
         on_delete=models.CASCADE,
         related_name='teacher_profile'
     )
-    full_name = models.CharField(max_length=100, null=False, blank=False, default="Unknown teacher")
+    full_name = models.CharField(max_length=100, null=False, blank=False)
     teacher_contact = models.CharField(max_length=15, 
                                       unique=True, 
                                       validators=[RegexValidator(r'^\+?\d{9,15}$')]) 
@@ -51,10 +65,10 @@ class Teacher(models.Model):
     date_employed = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.full_name} - {self.user.role}"
+        return f"{self.full_name} - {self.user.role if self.user else 'No role'}"
       
 
-"""Student Model"""
+""" The Student Model represents Student data taken into the Sytem for storage """
 
 class Student(models.Model):
     user = models.OneToOneField(
@@ -65,18 +79,16 @@ class Student(models.Model):
     
     full_name = models.CharField(max_length=100, null=False, blank=False, default="Unknown Student")
 
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=False, blank=False)
 
     mother_full_name = models.CharField(max_length=100)
     
     mother_contact = models.CharField(max_length=15, 
-                                      unique=True, 
                                       validators=[RegexValidator(r'^\+?\d{9,15}$')]) 
     
     father_full_name = models.CharField(max_length=100)
 
-    father_contact = models.CharField(max_length=15, 
-                                      unique=True, 
+    father_contact = models.CharField(max_length=15,  
                                       validators=[RegexValidator(r'^\+?\d{9,15}$')] 
         )
     home_address = models.TextField(blank=True, null=True)
@@ -85,16 +97,18 @@ class Student(models.Model):
 
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
-    enrollment_date = models.DateField(auto_now_add=True)
+    admission_date = models.DateField(auto_now_add=True)
 
     
 
     def __str__(self):
-        return f"{self.full_name} - {self.user.role}"
+        return f"{self.full_name} - {self.user.role if self.user else 'No role'}"   
     
 
+"""The Enrollment model is meant to put students in their respective classrooms in the sytem"""
+
 class Enrollment(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrollment')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrollments')
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name='enrollments')
     date_enrolled = models.DateTimeField(auto_now_add=True)
 
@@ -102,15 +116,17 @@ class Enrollment(models.Model):
         unique_together = ('student', 'classroom')
     
     def __str__(self):
-        return f"{self.student.full_name} is enrolled into: {self.classroom.name}"
+        return f"{self.student.full_name} - {self.classroom.name}"
 
+"""The TeacherAssign model helps assign a teacher to a classroom"""
 
 class TeacherAssign(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    date_assigned = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('teacher', 'classroom')
 
     def __str__(self):
-        return f"{self.teacher.full_name} is assigned to : {self.classroom.name}"
+        return f"{self.teacher.full_name} - {self.classroom.name}"

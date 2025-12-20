@@ -17,8 +17,9 @@ class CustomUser(AbstractUser):
         ('admin', 'Admin'),
     ]
 
-
+    date_of_birth = models.DateField(null=True, blank=False)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
+
     
     def save(self, *args, **kwargs):
         if self.pk:

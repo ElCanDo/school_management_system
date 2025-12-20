@@ -1,4 +1,6 @@
-from rest_framework import viewsets, permissions, filters, generics
+from rest_framework import viewsets, permissions, filters, generics, status
+from rest_framework.response import Response
+from django.shortcuts import redirect
 from .serializers import (CustomUserRegistrationSerializer, 
                           CustomUserSerializer, 
                            ClassroomSerializer, 
@@ -16,6 +18,21 @@ class CustomUserRegistrationView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserRegistrationSerializer
     permission_classes  = [permissions.AllowAny]
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        user = serializer.save()
+
+        return Response(
+            {
+"message": "User successfully registered",
+"user": CustomUserSerializer(user).data,
+"token" : serializer.get_tokens(user)
+},
+      status=status.HTTP_201_CREATED
+)
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
@@ -42,9 +59,6 @@ class TeacherViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['full_name', 'subject_specialization']
 
-    def get_object(self):
-        return self.request.user.teacher_profile
-
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all() 
@@ -53,16 +67,13 @@ class StudentViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['full_name']
 
-    def get_object(self):
-        return self.request.user.student_profile
-
 
 class EnrollmentViewSet(viewsets.ModelViewSet):
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer
     permission_classes = [IsAdmin, IsTeacher]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['student_full_name', 'classroom_name']
+    search_fields = ['student_name', 'classroom_name']
 
 
 class TeacherAssignViewSet(viewsets.ModelViewSet):

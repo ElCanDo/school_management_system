@@ -51,7 +51,6 @@ class ClassroomViewSet(viewsets.ModelViewSet):
     search_fields = ['name']
 
 
-
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all() 
     serializer_class = TeacherSerializer
@@ -74,6 +73,22 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdmin, IsTeacher]
     filter_backends = [filters.SearchFilter]
     search_fields = ['student_name', 'classroom_name']
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        user = serializer.save()
+
+        return Response(
+            {
+"message": f"Pupil {serializer.data['student_name']} is successfully enrolled into {serializer.data['classroom_name']}",
+"data": serializer.data
+},
+      status=status.HTTP_201_CREATED
+)
+    
+
 
 
 class TeacherAssignViewSet(viewsets.ModelViewSet):
@@ -82,3 +97,17 @@ class TeacherAssignViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdmin]
     filter_backends = [filters.SearchFilter]
     search_fields = ['teacher_full_name', 'classroom_name']
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        user = serializer.save()
+
+        return Response(
+            {
+"message": f"Madam/Sir {serializer.data['teacher_name']} is successfully assigned to {serializer.data['classroom_name']}",
+"data": serializer.data
+},
+      status=status.HTTP_201_CREATED
+)

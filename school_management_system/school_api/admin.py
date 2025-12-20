@@ -23,4 +23,3 @@ admin.site.register(TeacherAssign, TeacherAssignAdmin)
 
 admin.site.site_header = "School Management System"
 admin.site.index_title = "Welcome To The Admin Panel"
-admin.site.site_url = "https://myschoolportal.com"

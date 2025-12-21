@@ -85,3 +85,5 @@ python manage.py createsuperuser
 #### Step 6. Run the development server:
 
 python manage.py runserver
+
+#### Step 7. Go to https://http://127.0.0.1:8000/

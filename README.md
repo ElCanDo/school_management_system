@@ -51,14 +51,14 @@ The database is structured based on the following core models:
 
 ## Installation
 
-1. Clone the repository:
+####Step 1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/school-management-system.git
 ```
 cd school-management-system
 
 
-2. Create a virtual environment:
+####Step 2. Create a virtual environment:
 
 python -m venv venv
 
@@ -67,21 +67,21 @@ source venv/bin/activate   # Linux/Mac
 venv\Scripts\activate      # Windows
 
 
-3. Install dependencies:
+####Step 3. Install dependencies:
 
 pip install -r requirements.txt
 
 
-4. Apply migrations:
+####Step 4. Apply migrations:
 
 python manage.py migrate
 
 
-5. Create a superuser (optional):
+####Step 5. Create a superuser (optional):
 
 python manage.py createsuperuser
 
 
-6. Run the development server:
+####Step 6. Run the development server:
 
 python manage.py runserver

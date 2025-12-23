@@ -1,6 +1,6 @@
-from rest_framework import permissions
+from rest_framework.permissions import BasePermission
 
-class IsAdmin(permissions.BasePermission):
+class IsAdmin(BasePermission):
     def has_permission(self, request, view):
         user = request.user
 
@@ -13,7 +13,7 @@ class IsAdmin(permissions.BasePermission):
         return user.role =='admin'
 
 
-class IsTeacher(permissions.BasePermission):
+class IsTeacher(BasePermission):
     def has_permission(self, request, view):
         user = request.user
 
@@ -26,7 +26,7 @@ class IsTeacher(permissions.BasePermission):
         return hasattr(user, 'teacher_profile') 
     
     
-class IsStudent(permissions.BasePermission):
+class IsStudent(BasePermission):
     def has_permission(self, request, view):
         user = request.user
 

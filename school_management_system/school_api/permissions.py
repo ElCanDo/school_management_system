@@ -23,7 +23,7 @@ class IsTeacher(permissions.BasePermission):
         elif user.is_superuser:
             return True
 
-        return hasattr(request.user, 'teacher_profile') 
+        return hasattr(user, 'teacher_profile') 
     
     
 class IsStudent(permissions.BasePermission):

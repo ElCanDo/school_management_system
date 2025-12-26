@@ -17,7 +17,7 @@ class CustomUser(AbstractUser):
         ('admin', 'Admin'),
     ]
 
-    date_of_birth = models.DateField(null=True, blank=False)
+    date_of_birth = models.DateField(null=True, blank=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
 
     

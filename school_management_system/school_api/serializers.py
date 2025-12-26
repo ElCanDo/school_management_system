@@ -17,6 +17,7 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
             fields = ['id', 'username', 'email', 'password', 'verify_password',  'first_name', 'last_name', 'date_of_birth', 'role', 'tokens']
             read_only_fields = ['id', 'tokens']
 
+
     def validate(self, data):
             if data['password'] != data['verify_password']:
                 raise serializers.ValidationError("Passwords must match!")
@@ -28,14 +29,15 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
         password = validated_data.pop('password')
         
         user = User.objects.create_user(**validated_data, password=password)
-        date_of_birth = validated_data.pop('date_of_birth')
+        date_of_birth = validated_data.get('date_of_birth')
 
 
         if user.role == 'teacher':
-            Teacher.objects.create(user=user, full_name=f"{user.first_name} {user.last_name}")
+            Teacher.objects.create(user=user, full_name=f"{user.first_name} {user.last_name}".strip())
         elif user.role == 'student':
-            Student.objects.create(user=user, full_name=f"{user.first_name} {user.last_name}", date_of_birth=date_of_birth)
-
+            Student.objects.create(user=user, full_name=f"{user.first_name} {user.last_name}".strip(), date_of_birth=date_of_birth)
+        else:
+            raise serializers.ValidationError('User role must be specified')
         return user
     
 

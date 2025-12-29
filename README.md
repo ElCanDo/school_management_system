@@ -2,7 +2,7 @@
 
 ## Overview
 This is a **School Management System backend** built with **Django** and **Django REST Framework (DRF)**.  
-The system allows schools to manage users, students, teachers, classrooms, enrollments, and more. Admins can register their school, and teachers can manage their classrooms and students.
+The system allows schools to manage users, students, teachers, classrooms, enrollments, and more. For now, Only Admin can manage and organize students, teachers and classrooms.
 
 This project is a **capstone project** completed in 5 parts:
 1. Idea & Planning
@@ -10,6 +10,12 @@ This project is a **capstone project** completed in 5 parts:
 3. Backend Implementation (core modules)
 4. Feature Expansion
 5. Finalization & Submission
+
+---
+
+## Live Deployment
+The project is deployed and accessible at:  
+🌐 [https://princen.pythonanywhere.com/](https://princen.pythonanywhere.com/)
 
 ---
 
@@ -26,7 +32,7 @@ This project is a **capstone project** completed in 5 parts:
   - Teacher Assignment
 - Auto-generation of user IDs
 - Linking students to classrooms (enrollment)
-- Teacher assignments to classrooms
+- Teacher assignments to classrooms(teacher assign)
 
 ### Future Enhancements
 - Subjects management
@@ -34,6 +40,22 @@ This project is a **capstone project** completed in 5 parts:
 - Grading system
 - Advanced permissions
 - Frontend integration
+
+---
+
+## API Endpoints
+Here are some of the main API endpoints:
+
+| Endpoint | Description |
+|----------|-------------|
+| `/api/` | API root |
+| `/api/register/` | Register a new user |
+| `/api/users/` | List or manage users |
+| `/api/classrooms/` | List or manage classrooms |
+| `/api/teachers/` | List or manage teachers |
+| `/api/students/` | List or manage students |
+| `/api/enrollments/` | View and manage student enrollments |
+| `/api/teacher-assignments/` | View and assign teachers to classrooms |
 
 ---
 
@@ -49,13 +71,14 @@ The database is structured based on the following core models:
 
 ---
 
+#Running Locally
 ## Installation
 
 #### Step 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/school-management-system.git
+git clone https://github.com/ElCanDo/Capstone_Project.git
+cd Capstone_Project
 ```
-cd school-management-system
 
 
 #### Step 2. Create a virtual environment:

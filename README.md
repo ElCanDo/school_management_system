@@ -7,11 +7,12 @@ A RESTful School Management System API built with Django and Django REST Framewo
 Most endpoints require admin authentication. The deployment demonstrates API structure and behavior rather than open public access.
 
 ✨ Key Features 
-Role-based user system (Admin, Teacher, Student) 
-Custom user model with auto-generated user IDs Student enrollment into classrooms 
-Teacher assignment to classrooms 
-Full CRUD support for core entities 
-RESTful API design using Django REST Framework 
+- Role-based user system (Admin, Teacher, Student) 
+- Custom user model with auto-generated user IDs
+- Student enrollment into classrooms 
+- Teacher assignment to classrooms 
+- Full CRUD support for core entities 
+- RESTful API design using Django REST Framework 
 
 🛠️ Tech Stack Backend:
 - Python,
@@ -110,10 +111,10 @@ Access the API at: http://127.0.0.1:8000/
 
 📄 License 
 
-This project is developed as an academic capstone project for learning and demonstration purposes.
+- This project is developed as an academic capstone project for learning and demonstration purposes.
 
 👤 Author 
 
-Prince Nyarko 
+- Prince Nyarko 
 Backend Developer(Python, Django & REST APIs)
 

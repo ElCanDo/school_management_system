@@ -1,120 +1,146 @@
 # School Management System API
 
-School Management System API 
+A Django REST Framework API for managing core school operations, including user onboarding, classroom management, student enrollment, and teacher assignment.
 
-A RESTful School Management System API built with Django and Django REST Framework (DRF) for managing school operations such as users, students, teachers and classrooms.
+## Overview
 
-Most endpoints require admin authentication. The deployment demonstrates API structure and behavior rather than open public access.
+This project provides a role-aware backend for a school management workflow. It is designed around a custom user model and a set of academic domain resources exposed through RESTful endpoints.
 
-✨ Key Features 
-- Role-based user system (Admin, Teacher, Student) 
-- Custom user model with auto-generated user IDs
-- Student enrollment into classrooms 
-- Teacher assignment to classrooms 
-- Full CRUD support for core entities 
-- RESTful API design using Django REST Framework 
+Most endpoints require authenticated access and are intended for administrative or authorized users.
 
-🛠️ Tech Stack Backend:
-- Python,
-- Django, 
-- Django REST Framework 
+## Features
 
-Database: 
-- MySQL
+- **Role-based user model** for Admin, Teacher, and Student accounts
+- **Custom user registration** endpoint
+- **Classroom management** with full CRUD support
+- **Student management** with enrollment tracking
+- **Teacher management** with classroom assignment support
+- **JWT authentication** using Simple JWT
+- **Browsable API support** for development/testing
 
-Authentication: 
-- Simple JWT Authentication
+## Technology Stack
 
-Deployment: 
-- PythonAnywhere 
-https://princen.pythonanywhere.com/
+- **Language:** Python
+- **Framework:** Django
+- **API Framework:** Django REST Framework
+- **Authentication:** djangorestframework-simplejwt (JWT)
+- **Database:** MySQL
+- **Deployment target:** PythonAnywhere
 
+## Live Deployment
 
-Endpoints support standard HTTP methods (GET, POST, PUT, DELETE) based on user permissions.
-
-
----
+- Base URL: `https://princen.pythonanywhere.com/`
 
 ## API Endpoints
 
+### Core Routes
+
 | Endpoint | Description |
-|----------|-------------|
+|---|---|
 | `/api/` | API root |
 | `/api/register/` | Register a new user |
-| `/api/users/` | List or manage users |
-| `/api/classrooms/` | List or manage classrooms |
-| `/api/teachers/` | List or manage teachers |
-| `/api/students/` | List or manage students |
-| `/api/enrollments/` | View and manage student enrollments |
-| `/api/teacher-assignments/` | View and assign teachers to classrooms |
+| `/api/users/` | List/manage users |
+| `/api/classrooms/` | List/manage classrooms |
+| `/api/teachers/` | List/manage teachers |
+| `/api/students/` | List/manage students |
+| `/api/enrollments/` | View/manage student enrollments |
+| `/api/teacher-assignments/` | View/manage teacher-classroom assignments |
 
----
+### Authentication Routes
 
-## ERD Diagram
-The database is structured based on the following core models:
-- **User**: Stores all users (admin, teacher, student)
-- **Student**: Stores student profiles with parent contact and medical info
-- **Teacher**: Stores teacher profiles with subject specialization
-- **Classroom**: Stores classrooms with assigned teachers
-- **Enrollment**: Links students to classrooms
-- **Teacher-Assign**: Links teachers to classrooms
+| Endpoint | Description |
+|---|---|
+| `/api/token/` | Obtain JWT access and refresh tokens |
+| `/api/token/refresh/` | Refresh an access token |
+| `/api-auth/` | Session login/logout for DRF browsable API |
 
-![ERD Diagram](https://dbdiagram.io/d/School-Management-System-ERD-692b4544d6676488bae8ba7b)
+## Data Model (High-Level)
 
----
+The API is centered around these entities:
 
-#Running Locally
+- **User**: Base identity model (admin/teacher/student roles)
+- **Student**: Student profile and school-specific attributes
+- **Teacher**: Teacher profile and specialization details
+- **Classroom**: Class definitions and metadata
+- **Enrollment**: Student-to-classroom mapping
+- **Teacher Assignment**: Teacher-to-classroom mapping
 
-⚙️ Running Locally Installation 
+## Getting Started (Local Development)
 
-1. Clone the repository git clone
-https://github.com/ElCanDo/Capstone_Project.git 
-cd Capstone_Project 
+> Project code lives in the `school_management_system/` directory.
 
-2. Create and activate a virtual environment 
-python -m venv venv 
+### 1) Clone the repository
 
-Linux / macOS
-source venv/bin/activate 
+```bash
+git clone https://github.com/ElCanDo/Capstone_Project.git
+cd Capstone_Project/school_management_system
+```
 
-Windows
-venv\Scripts\activate 
+### 2) Create and activate a virtual environment
 
-3. Install dependencies:
-pip install -r requirements.txt 
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
 
-4. Apply migrations:
+On Windows (PowerShell):
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+### 3) Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4) Configure MySQL
+
+Update database settings in `school_management_system/settings.py` to match your local MySQL credentials/database name.
+
+### 5) Apply migrations
+
+```bash
 python manage.py migrate
+```
 
-5. Create a superuser:
-python manage.py createsuperuser 
+### 6) Create an admin account
 
-6. Run the development server: 
- python manage.py runserver 
+```bash
+python manage.py createsuperuser
+```
 
-Access the API at: http://127.0.0.1:8000/
+### 7) Run the development server
 
----
+```bash
+python manage.py runserver
+```
 
-###🔮 Future Improvements:
+Access the API at `http://127.0.0.1:8000/`.
 
-- School Register (Register the name of aschool)
-- Subjects management(Include subject management into the system)
-- Attendance tracking (Track student attendance to school)
-- Grading and Assessment system (Manage students classrooms tests and examinations)
+## Permissions & Access
 
-- Advanced role-based permissions (Teachers being able to manage their class students records and students viewing their records on the system)
-- Frontend integration
+- Default API permission is authenticated access.
+- JWT authentication is enabled globally in DRF settings.
+- Endpoint behavior is role-aware based on the authenticated user.
 
----
+## Roadmap
 
+Potential next improvements:
 
-📄 License 
+- School profile/registry module
+- Subject and curriculum management
+- Attendance tracking
+- Grading and assessment workflows
+- More granular role/record-level permissions
+- Frontend client integration
 
-- This project is developed as an academic capstone project for learning and demonstration purposes.
+## License
 
-👤 Author 
+This project was developed as an academic capstone for learning and demonstration purposes.
 
-- Prince Nyarko 
-Backend Developer(Python, Django & REST APIs)
+## Author
 
+**Prince Nyarko**  
+Backend Developer (Python, Django, REST APIs)

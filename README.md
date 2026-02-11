@@ -52,7 +52,6 @@ Most endpoints require authenticated access and are intended for administrative 
 |---|---|
 | `/api/token/` | Obtain JWT access and refresh tokens |
 | `/api/token/refresh/` | Refresh an access token |
-| `/api-auth/` | Session login/logout for DRF browsable API |
 
 ## Data Model (High-Level)
 

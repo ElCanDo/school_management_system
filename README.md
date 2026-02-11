@@ -50,6 +50,7 @@ Most endpoints require authenticated access and are intended for administrative 
 
 | Endpoint | Description |
 |---|---|
+| `/api/register/` | Custom User Registration |
 | `/api/token/` | Obtain JWT access and refresh tokens |
 | `/api/token/refresh/` | Refresh an access token |
 
